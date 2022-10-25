@@ -17,7 +17,7 @@ public class helloController {
     @GetMapping("/helloWorld")
     public String helloWorld() {
         System.out.println("Welcome to testing");
-        return helloService.appendBitch("Test for Omnistruct");
+        return helloService.appendTest("Test for Omnistruct");
     }
 }
 

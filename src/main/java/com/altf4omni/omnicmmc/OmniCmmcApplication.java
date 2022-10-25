@@ -9,5 +9,4 @@ public class OmniCmmcApplication {
     public static void main(String[] args) {
         SpringApplication.run(OmniCmmcApplication.class, args);
     }
-
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class HelloService {
 
-    public String appendBitch(String word) {
-        return word + " CS190";
+    public String appendTest(String word) {
+        return word + " CS190 ALTF4";
     }
 }
