@@ -11,6 +11,6 @@ public class OmniCmmcApplication {
         SpringApplication.run(OmniCmmcApplication.class, args);
         System.out.println("Hello, World!");
 
-        Person onePersn = Person.builder().questionNum(123345).question("Where is the lamb sauce??").build();
+        Person onePersn = Person.builder().num(123345).question("Where is the lamb sauce??").build();
     }
 }

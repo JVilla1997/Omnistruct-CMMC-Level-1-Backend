@@ -23,6 +23,6 @@ public class Person {
 //    @Column(name = "LICENSE")
     private String question;
 
-    private Integer questionNum;
+    private Integer num;
 
 }
