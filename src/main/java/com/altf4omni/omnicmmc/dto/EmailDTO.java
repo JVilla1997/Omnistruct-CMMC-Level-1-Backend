@@ -1,5 +1,4 @@
-package com.altf4omni.omnicmmc.service;
-package com.SpringBootEmail.Entity;
+package com.altf4omni.omnicmmc.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class EmailDTO {
-
+    /**
+     *
+     */
     private String recipient;
     private String msgBody;
     private String subject;

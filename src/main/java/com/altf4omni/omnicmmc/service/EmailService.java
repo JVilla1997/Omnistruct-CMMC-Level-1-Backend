@@ -1,2 +1,16 @@
-package com.altf4omni.omnicmmc.service;public interface EmailService {
+package com.altf4omni.omnicmmc.service;
+
+import com.altf4omni.omnicmmc.dto.EmailDTO;
+
+public interface EmailService {
+
+    /**
+     * send simple email to a recipient
+     *
+     * @param details email details
+     * @return String
+     */
+    String sendMailWithAttachment(EmailDTO details);
+
+
 }
