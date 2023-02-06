@@ -5,4 +5,6 @@ import lombok.Data;
 @Data
 public class AnswerDto {
 
+    private String questionName;
+    private String questionAnswer;
 }

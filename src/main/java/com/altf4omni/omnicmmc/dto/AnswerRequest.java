@@ -6,6 +6,12 @@ import java.util.List;
 
 @Data
 public class AnswerRequest {
+    /**
+     *
+     */
     private Integer numberOfQuestions;
+    /**
+     *
+     */
     private List<AnswerDto> questions;
 }
