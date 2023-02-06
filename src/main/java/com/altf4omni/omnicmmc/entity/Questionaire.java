@@ -20,9 +20,10 @@ import javax.persistence.Table;
 public class Questionaire {
 
     @Id
+    @Column(name = "QUESTION_NUM")
+    private Integer questionNumber;
     @Column(name = "QUESTION")
     private String question;
     @Column(name = "QUESTION_ANSWER")
     private String questionAnswer;
-
 }

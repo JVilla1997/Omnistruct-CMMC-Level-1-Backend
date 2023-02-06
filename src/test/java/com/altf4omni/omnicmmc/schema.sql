@@ -1,0 +1,5 @@
+-- CREATE TABLE QUESTIONAIRE (
+--     questionName varchar(50),
+--     questionAnswer varchar(50),
+--     primary key questionName
+-- )

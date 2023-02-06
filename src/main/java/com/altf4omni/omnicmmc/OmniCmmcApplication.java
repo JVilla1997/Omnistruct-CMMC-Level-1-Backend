@@ -10,7 +10,5 @@ public class OmniCmmcApplication {
     public static void main(String[] args) {
         SpringApplication.run(OmniCmmcApplication.class, args);
         System.out.println("Hello, World!");
-
-        Questionaire onePersn = Questionaire.builder().num(123345).question("Where is the lamb sauce??").build();
     }
 }
