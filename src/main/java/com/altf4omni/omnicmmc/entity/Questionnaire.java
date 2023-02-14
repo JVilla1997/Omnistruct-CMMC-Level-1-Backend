@@ -10,20 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name = "QUESTIONAIRE")
+@Table(name = "QUESTION_BANK")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Questionaire {
-
+public class Questionnaire {
     @Id
-    @Column(name = "QUESTION_NUM")
-    private Integer questionNumber;
-    @Column(name = "QUESTION")
-    private String question;
-    @Column(name = "QUESTION_ANSWER")
-    private String questionAnswer;
+    @Column(name = "NAME")
+    private String sectionID;
 }

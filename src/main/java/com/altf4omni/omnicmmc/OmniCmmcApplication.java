@@ -1,6 +1,5 @@
 package com.altf4omni.omnicmmc;
 
-import com.altf4omni.omnicmmc.entity.Questionaire;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
