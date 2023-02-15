@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface QuestionaireRepository extends JpaRepository<Question, String> {
+public interface QuestionaireRepository extends JpaRepository<Question, Integer> {
 
+    Question findDistinctByPromptAndPromptID();
 }
