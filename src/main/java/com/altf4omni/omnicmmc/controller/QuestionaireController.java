@@ -19,8 +19,8 @@ public class QuestionaireController {
      *                'createQuestion'
      * @return
      */
-    @PostMapping("/questionRequest")
-    public ResponseEntity<String> createQuestions(
+    @GetMapping("/questionQuestion")
+    public ResponseEntity<String> createQuestion(
             @RequestBody QuestionCreationRequest request)  {
         var response = questionaireService.createQuestion(request);
         return ResponseEntity.ok(response);

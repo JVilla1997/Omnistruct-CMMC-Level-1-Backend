@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -28,10 +29,20 @@ public class Question {
     @Column(name = "PROMPT")
     private String prompt;
     /**
+     * This column
+     */
+    @Column(name = "PROMPT_BACKGROUND")
+    private String promptBackground;
+    /**
      * Foreign key that maps each question to the correct section
      */
+    @Column(name = "PROMPT_SEQUENCE")
+    private Integer promptSequence;
     @ManyToOne
     @JoinColumn(name = "QUESTION_SECTION")
     private QuestionSection sectionID;
+
+    @OneToMany
+    private List<ExtendedQuestion> extndQuestion;
 
 }

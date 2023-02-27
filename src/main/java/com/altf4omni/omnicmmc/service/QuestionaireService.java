@@ -11,17 +11,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class QuestionaireService {
     private final QuestionaireRepository questionaireRepository;
-
     public QuestionaireService(QuestionaireRepository questionaireRepository) {
         this.questionaireRepository = questionaireRepository;
     }
     public String createQuestion(QuestionCreationRequest request) {
         //var question asks for questionName and questionAnswer from dto/QuestionCreationRequest and creates an entity
-        //and of type entity/Questionaire
+        //and of type entity Questionaire
         var question = Question.builder()
                 .prompt(request.getQuestionName())
                 .build();
         questionaireRepository.save(question);
+        //This is whacky, not good, not good
         return "Question created successfully!";
     }
 }
