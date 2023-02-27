@@ -5,7 +5,7 @@ import com.altf4omni.omnicmmc.dto.EmailDTO;
 public interface EmailService {
 
     /**
-     * send simple email to a recipient
+     * Send simple email to a recipient
      *
      * @param details email details
      * @return String

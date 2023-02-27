@@ -13,8 +13,9 @@ public class EmailDTO {
     /**
      *
      */
+    public static final String subject = "Questionnaire Answers";
     private String recipient;
+    private String recipientEmail;
     private String msgBody;
-    private String subject;
     private String attachment;
 }
