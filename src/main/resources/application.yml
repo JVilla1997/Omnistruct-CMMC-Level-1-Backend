@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    driverClassName:
+    username: ${DATABASE_USRNAME}
+    password: ${DATABASE_PSSWORD}
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: <Login User to SMTP server>
+    password: <Login password to SMTP server>
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
