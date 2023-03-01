@@ -26,6 +26,9 @@ public class QuestionSection {
      */
     @Column(name = "SECTION_NAME")
     private String sectionName;
+
+    @Column(name = "SECTION_SEQUENCE")
+    private Integer sectionSequence;
     /**
      * This attribute allows us to navigate through a list of Questions within a specific section
      */

@@ -1,5 +1,8 @@
 package com.altf4omni.omnicmmc.service;
 
+import com.altf4omni.omnicmmc.dto.ExtendedQuestionDto;
+import com.altf4omni.omnicmmc.dto.QuestionDto;
+import com.altf4omni.omnicmmc.dto.QuestionSectionDto;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
 import com.altf4omni.omnicmmc.entity.ExtendedQuestion;
 import com.altf4omni.omnicmmc.entity.Question;
@@ -25,30 +28,36 @@ public class QuestionaireService {
         this.extendedQuestionRepository = extendedQuestionRepository;
         this.questionSectionRepository = questionSectionRepository;
     }
+
+    /**
+     * Access {@link QuestionSectionRepository} and find all sections. Then for every section get all of the questions based
+     * on the sectionID. Then for every question get all of the extended questions based on the questionID. Finally, build a questionnaire
+     * response.
+     * @return {@link QuestionnaireResponse}
+     */
     public QuestionnaireResponse getQuestionnaire() {
-        /*
-        var sections = questionSectionRepository.findAll().stream()
-                .map()
-        */
-        /*
-        1. Stream through sections
-        2. For each section map to only the ID of the section
-        3. For each section ID return list of questions
-        4. Collect list of questions into a list
-         */
-        /*
-        var question = sections.stream()
-                .map(section -> section.getSectionID() )
-                .map(id -> questionRepository.findAllBySectionID(id))
-                .flatMap(List::stream)
-                .collect(Collectors.groupingBy(Question::getSectionID));
-        */
-        /*
-        1. Stream through questions
-        2. For each question map to only the ID of the question
-        3. For each question ID return list of the extended questions
-        4. Collect list of extended questions into a list
-        */
-        return null;
+
+        var sections = questionSectionRepository.findAll();
+
+        var sectionDtos = sections.stream()
+                .map(section -> {
+                    var sectionID = section.getSectionID();
+                    var questions = questionRepository.findAllBySectionID(sectionID);
+                    var questionDtos = questions.stream()
+                            .map(question -> {
+                                var questionID = question.getQuestionID();
+                                var extendedQuestions = extendedQuestionRepository.findAllByQuestionID(questionID);
+                                var extendedQuestionDtos = extendedQuestions.stream()
+                                        .map(extendedQuestion -> new ExtendedQuestionDto(extendedQuestion.getExtndPrompt(), extendedQuestion.getExtndDescription(),
+                                                extendedQuestion.getExtndSequence()))
+                                        .toList();
+                                return new QuestionDto(extendedQuestionDtos, question.getQuesttionPrompt(), question.getQuestionDescription(),
+                                        question.getQFlag(), question.getQuestionSequence());
+                            })
+                            .toList();
+                    return new QuestionSectionDto(questionDtos, section.getSectionName(), section.getSectionSequence());
+                })
+                .toList();
+        return new QuestionnaireResponse(sectionDtos);
     }
 }

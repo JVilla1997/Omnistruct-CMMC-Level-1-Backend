@@ -1,15 +1,12 @@
 spring:
   datasource:
     url: ${DATABASE_URL}
-    driverClassName:
-    username: ${DATABASE_USRNAME}
-    password: ${DATABASE_PSSWORD}
+    driverClassName: com.mysql.jdbc.Driver
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    defer-datasource-initialization: true
-    generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   mail:
     host: smtp.gmail.com
     port: 587

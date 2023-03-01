@@ -42,6 +42,9 @@ public class Question {
     @Column(name = "QUESTION_SEQUENCE")
     private Integer questionSequence;
 
+    @Column(name = "QUESTION_FLAG")
+    private Boolean qFlag;
+
     @ManyToOne
     @JoinColumn(name = "QUESTION_SECTION")
     private QuestionSection sectionID;
