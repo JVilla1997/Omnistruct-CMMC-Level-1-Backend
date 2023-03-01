@@ -2,16 +2,16 @@ package service
 
 import com.altf4omni.omnicmmc.dto.QuestionCreationRequest
 import com.altf4omni.omnicmmc.entity.Question
-import com.altf4omni.omnicmmc.repository.QuestionaireRepository
+import com.altf4omni.omnicmmc.repository.QuestionRepository
 import com.altf4omni.omnicmmc.service.QuestionaireService
 import spock.lang.Specification
 
 class QuestionaireServiceSpec extends Specification {
     //No semi-colon, skrrr skrrr
     //'Def' groovy is smart enough to figure out the type of variable, groovy is a good boy
-    def questionaireRepository = Mock(QuestionaireRepository)
+    def questionaireRepository = Mock(QuestionRepository)
     //This is telling us that we are going to be testing over Questionaire service.
-    def sut = new QuestionaireService(questionaireRepository)
+    def sut = new QuestionaireService(questionaireRepository, extendedQuestionRepository, questionSectionRepository)
     //This will be our method name
     def "Is create question method actually creating a method? Sussy >_>"() {
         given: "A question, duh"

@@ -21,23 +21,27 @@ public class Question {
      * question by only using it's ID
      */
     @Id
-    @Column(name = "PROMPT_ID")
-    private Integer promptID;
+    @Column(name = "QUESTION_ID")
+    private Integer questionID;
+
     /**
      * This column will contain the actual prompt of each question
      */
-    @Column(name = "PROMPT")
-    private String prompt;
+    @Column(name = "QUESTION_PROMPT")
+    private String questtionPrompt;
+
     /**
      * This column
      */
-    @Column(name = "PROMPT_BACKGROUND")
-    private String promptBackground;
+    @Column(name = "QUESTION_DESCRIPTION")
+    private String questionDescription;
+
     /**
      * Foreign key that maps each question to the correct section
      */
-    @Column(name = "PROMPT_SEQUENCE")
-    private Integer promptSequence;
+    @Column(name = "QUESTION_SEQUENCE")
+    private Integer questionSequence;
+
     @ManyToOne
     @JoinColumn(name = "QUESTION_SECTION")
     private QuestionSection sectionID;
