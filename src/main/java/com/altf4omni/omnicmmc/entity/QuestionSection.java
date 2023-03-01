@@ -19,7 +19,7 @@ public class QuestionSection {
      * Primary key to identify each individual section within the questionnaire
      */
     @Id
-    @Column(name = "QUESTION_ID")
+    @Column(name = "SECTION_ID")
     private Integer sectionID;
     /**
      * Attribute to identify each question section's name

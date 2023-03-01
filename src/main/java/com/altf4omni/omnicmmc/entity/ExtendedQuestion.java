@@ -16,17 +16,19 @@ import javax.persistence.*;
 public class ExtendedQuestion {
 
     @Id
-    @Column(name = "EXTND_PROMPT_ID")
-    private Integer extndPromptID;
+    @Column(name = "EXTND_QUESTION_ID")
+    private Integer extndQuestionID;
 
     @Column(name = "EXTND_PROMPT")
     private String extndPrompt;
+    @Column(name = "EXTND_DESCRIPTION")
+    private String extndDescription;
 
     @Column(name = "EXTND_SEQUENCE")
     private Integer extndSequence;
 
     @ManyToOne
-    @JoinColumn(name = "PROMPT_ID")
-    private Question promptID;
+    @JoinColumn(name = "QUESTION_ID")
+    private Question questionID;
 
 }
