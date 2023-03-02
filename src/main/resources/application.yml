@@ -1,12 +1,12 @@
 spring:
   datasource:
     url: ${DATABASE_URL}
-    driverClassName: com.mysql.jdbc.Driver
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
+    show-sql: true
   mail:
     host: smtp.gmail.com
     port: 587

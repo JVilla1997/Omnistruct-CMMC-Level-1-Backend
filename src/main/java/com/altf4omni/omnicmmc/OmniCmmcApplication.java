@@ -8,6 +8,7 @@ public class OmniCmmcApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(OmniCmmcApplication.class, args);
-        System.out.println("Hello, World!");
+        System.out.println(org.hibernate.Version.getVersionString());
+        System.out.println("App is up and running!");
     }
 }

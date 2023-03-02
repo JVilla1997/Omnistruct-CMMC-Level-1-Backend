@@ -21,14 +21,10 @@ public class ExtendedQuestion {
 
     @Column(name = "EXTND_PROMPT")
     private String extndPrompt;
+
     @Column(name = "EXTND_DESCRIPTION")
     private String extndDescription;
 
     @Column(name = "EXTND_SEQUENCE")
     private Integer extndSequence;
-
-    @ManyToOne
-    @JoinColumn(name = "QUESTION_ID")
-    private Question questionID;
-
 }
