@@ -17,7 +17,7 @@ public class QuestionaireController {
     }
 
     /**
-     * Get a questionnaire.
+     * Get a questionnaire
      * @return {@link QuestionnaireResponse}
      */
     @GetMapping("/questions")
