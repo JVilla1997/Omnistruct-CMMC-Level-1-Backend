@@ -10,19 +10,4 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 public class QuestionaireController {
-    private final QuestionaireService questionaireService;
-
-    public QuestionaireController(QuestionaireService questionaireService) {
-        this.questionaireService = questionaireService;
-    }
-
-    /**
-     * Get a questionnaire.
-     * @return {@link QuestionnaireResponse}
-     */
-    @GetMapping("/questions")
-    public ResponseEntity<QuestionnaireResponse> getQuestionnaire() {
-        var response = questionaireService.getQuestionnaire();
-        return ResponseEntity.ok(response);
-    }
 }
