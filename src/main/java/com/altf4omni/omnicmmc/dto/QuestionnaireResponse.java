@@ -10,5 +10,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionnaireResponse {
-    private List<QuestionSectionDto> questionSectionDtos;
+    private List<QuestionSectionDto> sections;
 }

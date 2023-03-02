@@ -9,10 +9,10 @@ import java.util.List;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
-    /**
-     * This method gets all Questions given a section ID
-     * @param sectionID Foreign key to identify question section
-     * @return List of {@link Question}
-     */
-    List<Question> findAllBySectionID(Integer sectionID);
+//    /**
+//     * This method gets all Questions given a section ID
+//     * @param sectionID Foreign key to identify question section
+//     * @return List of {@link Question}
+//     */
+//    List<Question> findAllBySectionID(Integer sectionID);
 }

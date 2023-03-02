@@ -19,13 +19,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class QuestionaireService {
-    private final QuestionRepository questionRepository;
-    private final ExtendedQuestionRepository extendedQuestionRepository;
     private final QuestionSectionRepository questionSectionRepository;
 
-    public QuestionaireService(QuestionRepository questionRepository, ExtendedQuestionRepository extendedQuestionRepository, QuestionSectionRepository questionSectionRepository) {
-        this.questionRepository = questionRepository;
-        this.extendedQuestionRepository = extendedQuestionRepository;
+    public QuestionaireService(QuestionSectionRepository questionSectionRepository) {
         this.questionSectionRepository = questionSectionRepository;
     }
 
@@ -33,25 +29,21 @@ public class QuestionaireService {
      * Access {@link QuestionSectionRepository} and find all sections. Then for every section get all of the questions based
      * on the sectionID. Then for every question get all of the extended questions based on the questionID. Finally, build a questionnaire
      * response.
+     *
      * @return {@link QuestionnaireResponse}
      */
     public QuestionnaireResponse getQuestionnaire() {
-
         var sections = questionSectionRepository.findAll();
-
+        //TODO:Null check
         var sectionDtos = sections.stream()
                 .map(section -> {
-                    var sectionID = section.getSectionID();
-                    var questions = questionRepository.findAllBySectionID(sectionID);
-                    var questionDtos = questions.stream()
+                    var questionDtos = section.getQuestions().stream()
                             .map(question -> {
-                                var questionID = question.getQuestionID();
-                                var extendedQuestions = extendedQuestionRepository.findAllByQuestionID(questionID);
-                                var extendedQuestionDtos = extendedQuestions.stream()
+                                var extendedQuestionDtos = question.getExtndQuestion().stream()
                                         .map(extendedQuestion -> new ExtendedQuestionDto(extendedQuestion.getExtndPrompt(), extendedQuestion.getExtndDescription(),
                                                 extendedQuestion.getExtndSequence()))
                                         .toList();
-                                return new QuestionDto(extendedQuestionDtos, question.getQuesttionPrompt(), question.getQuestionDescription(),
+                                return new QuestionDto(extendedQuestionDtos, question.getQuestionPrompt(), question.getQuestionDescription(),
                                         question.getQFlag(), question.getQuestionSequence());
                             })
                             .toList();

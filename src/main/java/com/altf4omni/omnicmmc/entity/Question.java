@@ -28,7 +28,7 @@ public class Question {
      * This column will contain the actual prompt of each question
      */
     @Column(name = "QUESTION_PROMPT")
-    private String questtionPrompt;
+    private String questionPrompt;
 
     /**
      * This column
@@ -42,14 +42,13 @@ public class Question {
     @Column(name = "QUESTION_SEQUENCE")
     private Integer questionSequence;
 
+    /**
+     * TODO: add description
+     */
     @Column(name = "QUESTION_FLAG")
     private Boolean qFlag;
 
-    @ManyToOne
-    @JoinColumn(name = "QUESTION_SECTION")
-    private QuestionSection sectionID;
-
     @OneToMany
+    @JoinColumn(name = "QUESTION_ID")
     private List<ExtendedQuestion> extndQuestion;
-
 }

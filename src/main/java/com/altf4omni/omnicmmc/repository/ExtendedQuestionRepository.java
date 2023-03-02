@@ -8,10 +8,9 @@ import java.util.List;
 
 @Repository
 public interface ExtendedQuestionRepository extends JpaRepository<ExtendedQuestion, Integer> {
-    /**
-     * This method gets all ExtendedQuestions given a question ID
-     * @param promptID Foreign key to identify a question
-     * @return List of {@link ExtendedQuestion}
-     */
-    List<ExtendedQuestion> findAllByQuestionID(Integer questionID);
+//    /**
+//     * This method gets all ExtendedQuestions given a question ID
+//     * @return List of {@link ExtendedQuestion}
+//     */
+//    List<ExtendedQuestion> findAllByQuestionID(Integer questionID);
 }
