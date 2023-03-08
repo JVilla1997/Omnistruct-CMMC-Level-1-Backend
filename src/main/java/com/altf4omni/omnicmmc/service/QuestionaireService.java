@@ -4,15 +4,8 @@ import com.altf4omni.omnicmmc.dto.ExtendedQuestionDto;
 import com.altf4omni.omnicmmc.dto.QuestionDto;
 import com.altf4omni.omnicmmc.dto.QuestionSectionDto;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
-import com.altf4omni.omnicmmc.entity.ExtendedQuestion;
-import com.altf4omni.omnicmmc.entity.Question;
-import com.altf4omni.omnicmmc.repository.ExtendedQuestionRepository;
-import com.altf4omni.omnicmmc.repository.QuestionRepository;
 import com.altf4omni.omnicmmc.repository.QuestionSectionRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -52,4 +45,5 @@ public class QuestionaireService {
                 .toList();
         return new QuestionnaireResponse(sectionDtos);
     }
+
 }
