@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExtendedQuestionAnswerDto {
-    private String prompt;
+    private String prompt; //question
     private String description;
     private String answer; //this is the actual answer
     private PassFailResult result; //the pass or fail result
