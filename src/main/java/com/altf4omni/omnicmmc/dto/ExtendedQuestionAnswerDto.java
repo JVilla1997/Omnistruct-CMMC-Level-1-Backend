@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExtendedQuestionDto {
-    private String prompt;
+public class ExtendedQuestionAnswerDto {
+    private String prompt; //question
     private String description;
-    private Integer sequenceNumber;
-
+    private String answer; //this is the actual answer
+    private PassFailResult result; //the pass or fail result
 }
