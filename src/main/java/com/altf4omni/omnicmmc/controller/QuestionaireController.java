@@ -4,16 +4,13 @@ import com.altf4omni.omnicmmc.dto.ExtendedQuestionAnswerDto;
 import com.altf4omni.omnicmmc.dto.AnswerRequest;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
 import com.altf4omni.omnicmmc.service.QuestionaireService;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import groovy.util.logging.Slf4j;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
@@ -51,8 +48,21 @@ public class QuestionaireController {
         Paragraph AnswerList = new Paragraph((Chunk) answerRequest.getAnswerList());
         Paragraph SectionName = new Paragraph(answerRequest.getSectionName());
 
+        for(Element item: AnswerList ){
+            document.add(new Paragraph((Chunk) item));
+        }
 
-        return null;
+        document.add(SectionName);
+
+        document.close();
+        byte[] pdfData = pdfOutput.toByteArray();
+        ExtendedQuestionAnswerDto dto = new ExtendedQuestionAnswerDto();
+
+        HttpHeaders pdfHeader = new HttpHeaders();
+        pdfHeader.setContentType(MediaType.APPLICATION_PDF);
+        pdfHeader.setContentDisposition(ContentDisposition.builder("attachment").filename("Policy Document.pdf").build());
+        pdfHeader.setContentLength(pdfData.length);
+        return new ResponseEntity<>(dto,pdfHeader, HttpStatus.OK);
     }
 
 }
