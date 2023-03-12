@@ -8,4 +8,12 @@ import java.util.List;
 public class AnswerRequest {
     private List<QuestionAnswerDto> answerList;
     private String sectionName;
+
+    public List<QuestionAnswerDto> getAnswerList(){
+        return answerList;
+    }
+
+    public String getSectionName(){
+        return sectionName;
+    }
 }

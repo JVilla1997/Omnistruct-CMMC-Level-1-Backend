@@ -4,8 +4,10 @@ import com.altf4omni.omnicmmc.dto.ExtendedQuestionAnswerDto;
 import com.altf4omni.omnicmmc.dto.AnswerRequest;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
 import com.altf4omni.omnicmmc.service.QuestionaireService;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import groovy.util.logging.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,17 +43,14 @@ public class QuestionaireController {
      */
     @PostMapping("/answer")
     public ResponseEntity<ExtendedQuestionAnswerDto> createAnswerObject(@RequestBody AnswerRequest answerRequest) throws DocumentException {
-        ByteArrayOutputStream pdfOutput = pdfOutput(answerRequest);
-
-
-        return null;
-    }
-
-    private ByteArrayOutputStream pdfOutput(AnswerRequest answerRequest) throws DocumentException{
         ByteArrayOutputStream pdfOutput = new ByteArrayOutputStream();
         Document document = new Document();
         PdfWriter.getInstance(document, pdfOutput);
         document.open();
+
+        Paragraph AnswerList = new Paragraph((Chunk) answerRequest.getAnswerList());
+        Paragraph SectionName = new Paragraph(answerRequest.getSectionName());
+
 
         return null;
     }
