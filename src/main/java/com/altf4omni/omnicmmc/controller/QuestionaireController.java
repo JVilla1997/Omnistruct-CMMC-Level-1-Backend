@@ -59,7 +59,7 @@ public class QuestionaireController {
         ExtendedQuestionAnswerDto dto = new ExtendedQuestionAnswerDto();
 
         HttpHeaders pdfHeader = new HttpHeaders();
-        pdfHeader.setContentType(MediaType.APPLICATION_PDF);
+        pdfHeader.setContentType(MediaType.APPLICATION_JSON);
         pdfHeader.setContentDisposition(ContentDisposition.builder("attachment").filename("Policy Document.pdf").build());
         pdfHeader.setContentLength(pdfData.length);
         return new ResponseEntity<>(dto,pdfHeader, HttpStatus.OK);
