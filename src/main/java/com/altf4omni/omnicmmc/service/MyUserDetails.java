@@ -1,16 +1,23 @@
 package com.altf4omni.omnicmmc.service;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+
+import javax.management.relation.Role;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 
 public class MyUserDetails implements UserDetails{
 
-    private SecurityProperties.User user;
+    private User user;
 
-    public MyUserDetails(SecurityProperties.User user) {
+    public MyUserDetails(User user) {
         this.user = user;
     }
 

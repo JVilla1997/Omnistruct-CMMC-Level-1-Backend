@@ -1,5 +1,6 @@
 package com.altf4omni.omnicmmc.service;
 
+import com.altf4omni.omnicmmc.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
