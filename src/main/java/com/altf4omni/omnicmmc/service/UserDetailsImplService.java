@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsImplService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
