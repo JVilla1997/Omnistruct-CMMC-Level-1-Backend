@@ -14,10 +14,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Role {
     @Id
-    @Column(name = "role_id")
+    @Column(name = "ROLE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "ROLE_NAME")
     private String name;
 
     public Integer getId() {

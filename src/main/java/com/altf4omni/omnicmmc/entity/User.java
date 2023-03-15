@@ -16,14 +16,17 @@ import java.util.*;
 @NoArgsConstructor
 public class User {
     @Id
-    @Column(name = "user_id")
+    @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name= "USERNAME")
     private String username;
 
+    @Column(name="PASSWORD")
     private String password;
 
+    @Column(name= "ENABLED")
     private boolean enabled;
 
     public Long getId() {
@@ -34,6 +37,7 @@ public class User {
         this.id = id;
     }
 
+    /*
     public String getUsername() {
         return username;
     }
@@ -65,7 +69,7 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
+*/
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -73,7 +77,5 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
-
-
 
 }

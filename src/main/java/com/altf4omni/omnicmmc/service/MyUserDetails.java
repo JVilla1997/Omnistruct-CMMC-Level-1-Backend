@@ -1,46 +1,43 @@
 package com.altf4omni.omnicmmc.service;
+import com.altf4omni.omnicmmc.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
-import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 
 public class MyUserDetails implements UserDetails{
 
-    private User user;
+    private final UserRepository userRepository;
 
-    public MyUserDetails(User user) {
-        this.user = user;
+    public MyUserDetails(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<Role> roles = user.getRoles();
+        //Set<Role> roles = user.getRoles();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        for (Role role : roles) {
+      /*  for (Role role : roles) {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
+        }*/
 
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return userRepository.toString();
+        //userRepository.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return userRepository.toString();
     }
 
     @Override
@@ -58,9 +55,13 @@ public class MyUserDetails implements UserDetails{
         return true;
     }
 
+    /**
+     * WILL NEED TO RETURN CORRECT THING; HAVE FALSE FOR NOW
+     * @return
+     */
     @Override
     public boolean isEnabled() {
-        return user.isEnabled();
+        return false;
     }
 
 }

@@ -21,6 +21,6 @@ public class UserDetailsImplService implements UserDetailsService {
                     throw new UsernameNotFoundException("Could not find user");
                 }
 
-                return new MyUserDetails(user);
+                return new MyUserDetails(userRepository);
             }
 }
