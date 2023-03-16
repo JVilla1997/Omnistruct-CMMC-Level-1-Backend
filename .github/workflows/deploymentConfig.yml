@@ -20,21 +20,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Package with Maven
-        run: mvn clean test --file pom.xml
+        run: mvn clean install --file pom.xml
       - name: Upload artifact to actions
         uses: actions/upload-artifact@v3
         with:
           name: spring-packaged-files
           path: .
-  dockerize:
-    needs: package
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: spring-packaged-files
-      - name: Make Maven Wrapper executable
-        run: chmod +x ./mvnw
-      - name: Create Docker image
-        run: docker build -t login-system .
