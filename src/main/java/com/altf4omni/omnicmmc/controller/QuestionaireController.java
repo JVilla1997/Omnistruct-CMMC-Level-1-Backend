@@ -23,6 +23,7 @@ public class QuestionaireController {
 
     /**
      * Get a questionnaire
+     *
      * @return {@link QuestionnaireResponse}
      */
     @GetMapping("/questions")
@@ -35,7 +36,7 @@ public class QuestionaireController {
      * @return
      */
     @PostMapping("/answer")
-    public ResponseEntity<ExtendedQuestionAnswerDto> createAnswerObject(@RequestBody AnswerRequest answerRequest){
+    public ResponseEntity<ExtendedQuestionAnswerDto> createAnswerObject(@RequestBody AnswerRequest answerRequest) {
         //TODO: make logic for pdf
         return null;
     }
