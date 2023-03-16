@@ -81,7 +81,7 @@ class QuestionaireServiceSpec extends Specification {
         response.sections.size() == 1
         response.sections[0].sectionName == 'Hello World'
         response.sections[0].sequenceNumber == 1
-        response.sections[0].questions.size() == 0
+        response.sections[0].questions.size() == 1
         and: "No null pointer exception should be thrown"
         noExceptionThrown()
 
