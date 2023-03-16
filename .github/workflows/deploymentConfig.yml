@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Package with Maven
-        run: mvn clean package --file pom.xml
+        run: mvn clean test --file pom.xml
       - name: Upload artifact to actions
         uses: actions/upload-artifact@v3
         with:
