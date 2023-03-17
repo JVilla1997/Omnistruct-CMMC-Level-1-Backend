@@ -1,12 +1,13 @@
 package com.altf4omni.omnicmmc.controller;
 
-import com.altf4omni.omnicmmc.dto.ExtendedQuestionAnswerDto;
 import com.altf4omni.omnicmmc.dto.AnswerRequest;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
 import com.altf4omni.omnicmmc.service.QuestionaireService;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import groovy.util.logging.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,6 @@ import java.io.ByteArrayOutputStream;
 @RestController
 public class QuestionaireController {
     private final QuestionaireService questionaireService;
-    //private final AnswerRepository answerRepository;
 
     public QuestionaireController(QuestionaireService questionaireService) {
         this.questionaireService = questionaireService;
@@ -38,31 +38,26 @@ public class QuestionaireController {
     /**
      * @return
      */
-    @PostMapping("/answer")
-    public ResponseEntity<ExtendedQuestionAnswerDto> createAnswerObject(@RequestBody AnswerRequest answerRequest) throws DocumentException {
+    @PostMapping(value = "answer", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<Resource> createAnswerObject(@RequestBody AnswerRequest answerRequest) throws DocumentException {
         ByteArrayOutputStream pdfOutput = new ByteArrayOutputStream();
         Document document = new Document();
         PdfWriter.getInstance(document, pdfOutput);
         document.open();
 
-        Paragraph AnswerList = new Paragraph((Chunk) answerRequest.getAnswerList());
         Paragraph SectionName = new Paragraph(answerRequest.getSectionName());
 
-        for(Element item: AnswerList ){
-            document.add(new Paragraph((Chunk) item));
-        }
 
         document.add(SectionName);
 
         document.close();
         byte[] pdfData = pdfOutput.toByteArray();
-        ExtendedQuestionAnswerDto dto = new ExtendedQuestionAnswerDto();
+        ByteArrayResource byteResource= new ByteArrayResource(pdfData);
 
         HttpHeaders pdfHeader = new HttpHeaders();
-        pdfHeader.setContentType(MediaType.APPLICATION_JSON);
-        pdfHeader.setContentDisposition(ContentDisposition.builder("attachment").filename("Policy Document.pdf").build());
-        pdfHeader.setContentLength(pdfData.length);
-        return new ResponseEntity<>(dto,pdfHeader, HttpStatus.OK);
+        pdfHeader.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=policy.pdf");
+
+        return ResponseEntity.ok().headers(pdfHeader).contentType(MediaType.APPLICATION_PDF).body(byteResource);
     }
 
 }
