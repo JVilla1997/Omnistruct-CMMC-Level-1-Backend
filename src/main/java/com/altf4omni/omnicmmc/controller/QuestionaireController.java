@@ -52,19 +52,16 @@ public class QuestionaireController {
 
         Paragraph SectionName = new Paragraph(answerRequest.getSectionName());
         Paragraph AnswerList = new Paragraph();
-        ExtendedQuestionAnswerDto extendedQuestionDto = answerRequest.getAnswerList().getExtendedQuestionDto();
 
-        QuestionAnswerDto questionAnswer = new QuestionAnswerDto();
-        PassFailResult result;
-
+        document.add(new Paragraph ("Primary Questions"));
         document.add((new Paragraph("Section: " + SectionName)));
         for(QuestionAnswerDto questionAnswerDto: answerRequest.getAnswerList()){
+
             document.add(new Paragraph ("Answer: " + questionAnswerDto.getAnswer()));
             document.add(new Paragraph("Description: " + questionAnswerDto.getDescription()));
             document.add(new Paragraph("Prompt: " + questionAnswerDto.getPrompt()));
 
-            result = questionAnswer.getResult();
-            if(result == PassFailResult.PASS){
+            if(questionAnswerDto.getResult() == PassFailResult.PASS){
                 Chunk chunk = new Chunk("Result: Pass");
                 chunk.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, BaseColor.GREEN));
                 document.add(new Paragraph(chunk));
@@ -73,12 +70,28 @@ public class QuestionaireController {
                 chunk.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, BaseColor.RED));
                 document.add(new Paragraph(chunk));
             }
-        }
+            document.add(new Paragraph ("\n"));
 
-        for(ExtendedQuestionAnswerDto extendedQuestionAnswerDto: questionAnswer.getExtendedQuestionAnswers()){
-            document.add(new Paragraph ("Answer: " + extendedQuestionAnswerDto.getAnswer()));
+            for(ExtendedQuestionAnswerDto extendedQuestionAnswerDto: questionAnswerDto.getExtendedQuestionAnswers()){
+                document.add(new Paragraph ("Extended Questions"));
+                document.add(new Paragraph ("Prompt: " + extendedQuestionAnswerDto.getPrompt()));
+                document.add(new Paragraph ("Description: " + extendedQuestionAnswerDto.getDescription()));
+                document.add(new Paragraph ("Answer: " + extendedQuestionAnswerDto.getAnswer()));
+
+                if(extendedQuestionAnswerDto.getResult() == PassFailResult.PASS){
+                    Chunk chunk = new Chunk("Result: Pass");
+                    chunk.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, BaseColor.GREEN));
+                    document.add(new Paragraph(chunk));
+                } else {
+                    Chunk chunk = new Chunk("Result: Fail");
+                    chunk.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, BaseColor.RED));
+                    document.add(new Paragraph(chunk));
+                }
 
 
+
+
+            }
         }
 
 
