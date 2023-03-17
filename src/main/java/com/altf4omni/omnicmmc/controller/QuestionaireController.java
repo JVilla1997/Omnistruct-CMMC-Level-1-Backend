@@ -50,9 +50,15 @@ public class QuestionaireController {
         PdfWriter.getInstance(document, pdfOutput);
         document.open();
 
-        Paragraph SectionName = new Paragraph(answerRequest.getSectionName());
-        Paragraph AnswerList = new Paragraph();
+        //Title chunk for PDF
+        Chunk titleChunk = new Chunk("Policy Document", new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD));
+        Paragraph paragraph = new Paragraph(titleChunk);
+        paragraph.setAlignment(Element.ALIGN_CENTER);
+        document.add(paragraph);
 
+        //Adding JSON attributes
+        document.add(new Paragraph ("\n"));
+        Paragraph SectionName = new Paragraph(answerRequest.getSectionName());
         document.add(new Paragraph ("Primary Questions"));
         document.add((new Paragraph("Section: " + SectionName)));
         for(QuestionAnswerDto questionAnswerDto: answerRequest.getAnswerList()){
@@ -93,9 +99,6 @@ public class QuestionaireController {
 
             }
         }
-
-
-
         document.close();
         byte[] pdfData = pdfOutput.toByteArray();
         ByteArrayResource byteResource= new ByteArrayResource(pdfData);
