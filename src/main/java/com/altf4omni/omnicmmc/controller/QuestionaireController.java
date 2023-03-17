@@ -1,6 +1,7 @@
 package com.altf4omni.omnicmmc.controller;
 
 import com.altf4omni.omnicmmc.dto.AnswerRequest;
+import com.altf4omni.omnicmmc.dto.QuestionAnswerDto;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
 import com.altf4omni.omnicmmc.service.QuestionaireService;
 import com.itextpdf.text.*;
@@ -46,9 +47,13 @@ public class QuestionaireController {
         document.open();
 
         Paragraph SectionName = new Paragraph(answerRequest.getSectionName());
-
+        Paragraph AnswerList = new Paragraph();
 
         document.add(SectionName);
+        for(QuestionAnswerDto questionAnswerDto: answerRequest.getAnswerList()){
+            document.add(new Paragraph (questionAnswerDto.getAnswer()));
+            document.add(new Paragraph(questionAnswerDto.getDescription()));
+        }
 
         document.close();
         byte[] pdfData = pdfOutput.toByteArray();
