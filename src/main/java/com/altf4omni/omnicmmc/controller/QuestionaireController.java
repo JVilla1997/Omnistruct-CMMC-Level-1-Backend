@@ -1,9 +1,11 @@
 package com.altf4omni.omnicmmc.controller;
 
+import com.altf4omni.omnicmmc.dto.AnswerRequestDto;
 import com.altf4omni.omnicmmc.dto.ExtendedQuestionAnswerDto;
 import com.altf4omni.omnicmmc.dto.AnswerRequest;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
 import com.altf4omni.omnicmmc.service.QuestionaireService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import groovy.util.logging.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,8 +38,7 @@ public class QuestionaireController {
      * @return
      */
     @PostMapping("/answer")
-    public ResponseEntity<ExtendedQuestionAnswerDto> createAnswerObject(@RequestBody AnswerRequest answerRequest) {
-        //TODO: make logic for pdf
+    public ResponseEntity<ExtendedQuestionAnswerDto> createAnswerObject(@RequestBody AnswerRequestDto answerRequestDto) {
         return null;
     }
 
