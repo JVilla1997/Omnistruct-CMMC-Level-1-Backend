@@ -87,11 +87,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy -->
+        <!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all -->
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>3.0.0-alpha-1</version>
+            <artifactId>groovy-all</artifactId>
+            <version>3.0.0</version>
+            <type>pom</type>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
