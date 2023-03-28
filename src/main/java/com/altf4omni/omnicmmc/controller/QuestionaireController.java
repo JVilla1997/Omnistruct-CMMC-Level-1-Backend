@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:8080"})
 public class QuestionaireController {
     private final QuestionaireService questionaireService;
     //private final AnswerRepository answerRepository;
@@ -38,8 +39,8 @@ public class QuestionaireController {
      * @return
      */
     @PostMapping("/answer")
-    public ResponseEntity<ExtendedQuestionAnswerDto> createAnswerObject(@RequestBody AnswerRequestDto answerRequestDto) {
-        return null;
+    public ResponseEntity<String> createAnswerObject(@RequestBody AnswerRequestDto answerRequestDto) {
+        return ResponseEntity.ok("It works");
     }
 
 }
