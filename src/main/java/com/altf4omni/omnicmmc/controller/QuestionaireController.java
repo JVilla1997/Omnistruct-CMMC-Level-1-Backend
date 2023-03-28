@@ -1,12 +1,12 @@
 package com.altf4omni.omnicmmc.controller;
 
 import com.altf4omni.omnicmmc.dto.AnswerRequestDto;
-import com.altf4omni.omnicmmc.dto.ExtendedQuestionAnswerDto;
-import com.altf4omni.omnicmmc.dto.AnswerRequest;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
+import com.altf4omni.omnicmmc.service.AnswerService;
 import com.altf4omni.omnicmmc.service.QuestionaireService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itextpdf.text.DocumentException;
 import groovy.util.logging.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class QuestionaireController {
     private final QuestionaireService questionaireService;
+    private AnswerService answerService;
+
     //private final AnswerRepository answerRepository;
 
     public QuestionaireController(QuestionaireService questionaireService) {
@@ -38,8 +40,8 @@ public class QuestionaireController {
      * @return
      */
     @PostMapping("/answer")
-    public ResponseEntity<ExtendedQuestionAnswerDto> createAnswerObject(@RequestBody AnswerRequestDto answerRequestDto) {
-        return null;
+    public ResponseEntity<ByteArrayResource> createAnswerObject(@RequestBody AnswerRequestDto answerRequestDto) throws DocumentException {
+        return answerService.answerRequestList(answerRequestDto);
     }
 
 }
