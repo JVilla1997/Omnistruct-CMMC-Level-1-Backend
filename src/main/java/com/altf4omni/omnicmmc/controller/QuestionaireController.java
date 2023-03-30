@@ -7,6 +7,8 @@ import com.altf4omni.omnicmmc.service.QuestionaireService;
 import com.itextpdf.text.DocumentException;
 import groovy.util.logging.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,8 +45,11 @@ public class QuestionaireController {
     public ResponseEntity<ByteArrayResource> createAnswerObject(@RequestBody AnswerRequestDto answerRequestDto) throws DocumentException {
         // Call the answerService to process the PDF
        var pdf = answerService.answerRequestList(answerRequestDto);
+        HttpHeaders pdfHeader = new HttpHeaders();
+        pdfHeader.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=policy.pdf");
+
         // Return the response
-        return ResponseEntity.ok(pdf).getBody();
+        return ResponseEntity.ok().headers(pdfHeader).contentType(MediaType.APPLICATION_PDF).body(pdf.getBody());
     }
 
 }
