@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
 @Slf4j
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:8080"})
+//@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:8080"})
 public class QuestionaireController {
     private final QuestionaireService questionaireService;
     //private final AnswerRepository answerRepository;
