@@ -18,12 +18,11 @@ import org.springframework.web.bind.annotation.*;
 public class QuestionaireController {
     private final QuestionaireService questionaireService;
     private AnswerService answerService;
-
-    //private final AnswerRepository answerRepository;
-
-    public QuestionaireController(QuestionaireService questionaireService) {
+    public QuestionaireController(QuestionaireService questionaireService, AnswerService answerService) {
         this.questionaireService = questionaireService;
+        this.answerService = answerService;
     }
+
 
     /**
      * Get a questionnaire
@@ -37,11 +36,15 @@ public class QuestionaireController {
     }
 
     /**
-     * @return
+     * Get the PDF
+     * @return {@Link ByteArrayResource}
      */
     @PostMapping("/answer")
     public ResponseEntity<ByteArrayResource> createAnswerObject(@RequestBody AnswerRequestDto answerRequestDto) throws DocumentException {
-        return answerService.answerRequestList(answerRequestDto);
+        // Call the answerService to process the PDF
+       var pdf = answerService.answerRequestList(answerRequestDto);
+        // Return the response
+        return ResponseEntity.ok(pdf).getBody();
     }
 
 }

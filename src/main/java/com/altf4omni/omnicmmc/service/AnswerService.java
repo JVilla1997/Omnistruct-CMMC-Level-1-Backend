@@ -1,6 +1,10 @@
 package com.altf4omni.omnicmmc.service;
 
+import com.altf4omni.omnicmmc.dto.AnswerRequest;
 import com.altf4omni.omnicmmc.dto.AnswerRequestDto;
+import com.altf4omni.omnicmmc.dto.ExtendedQuestionAnswerDto;
+import com.altf4omni.omnicmmc.dto.QuestionAnswerDto;
+import com.altf4omni.omnicmmc.enumeration.PassFailResult;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.core.io.ByteArrayResource;
@@ -10,10 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Objects;
 
 @Service
 public class AnswerService {
-
     public ResponseEntity<ByteArrayResource> answerRequestList(AnswerRequestDto answerRequestDto) throws DocumentException {
         ByteArrayOutputStream pdfOutput = new ByteArrayOutputStream();
         Document document = new Document();
@@ -21,10 +25,75 @@ public class AnswerService {
         document.open();
 
         //Title chunk for PDF
+        Chunk chunk;
         Chunk titleChunk = new Chunk("Policy Document", new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD));
         Paragraph paragraph = new Paragraph(titleChunk);
         paragraph.setAlignment(Element.ALIGN_CENTER);
         document.add(paragraph);
+
+        //Formatting pdf and JSON attributes added
+        document.add(new Paragraph("\n"));
+        for(AnswerRequest answerRequest:answerRequestDto.getSections()){
+            //Section name: Formatted
+            document.add(new Paragraph("Section:" + answerRequest.getSectionName(), new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD)));
+
+            //For loop to go through  first main questions
+            for (QuestionAnswerDto questionAnswerDto: answerRequest.getAnswerList()){
+                //Answer: If question is skipped then it will say "skipped"
+                if (Objects.equals(questionAnswerDto.getAnswer(), "")){
+                    document.add(new Paragraph("Answer: Skipped"));
+                } else {
+                    document.add(new Paragraph("Answer:" + questionAnswerDto.getAnswer()));
+                }
+
+                //Description: If there is a description avaible then it show the description other wise it will show the descrition for the question
+                if(questionAnswerDto.getDescription() == null){
+                    document.add(new Paragraph("Description: No description avaiable "));
+                } else {
+                    document.add(new Paragraph("Description:" + questionAnswerDto.getDescription()));
+                }
+                //Prompt: Question displayed to user
+                document.add(new Paragraph("Question Prompt" + questionAnswerDto.getDescription()));
+
+                //Result: Using PassFailResult class I check the JSON file for a PASS or fail
+
+                if(questionAnswerDto.getResult() == PassFailResult.PASS){
+                    chunk = new Chunk("Result: Pass");
+                    chunk.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, BaseColor.GREEN));
+                } else {
+                    chunk = new Chunk("Result: Fail");
+                    chunk.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, BaseColor.RED));
+                }
+                document.add(new Paragraph(chunk));
+
+                document.add(new Paragraph("\n"));
+
+                //For loop to go through all the extended questions in a specific section
+                for (ExtendedQuestionAnswerDto extendedQuestionAnswerDto: questionAnswerDto.getExtendedQuestionAnswers()){
+                    document.add(new Paragraph("Extended Question Prompt:" + extendedQuestionAnswerDto.getPrompt()));
+
+                    if(extendedQuestionAnswerDto.getDescription() == null){
+                        document.add(new Paragraph("Description: No description avaiable "));
+                    } else {
+                        document.add(new Paragraph("Description: " + extendedQuestionAnswerDto.getDescription()));
+                    }
+
+                    if (Objects.equals(extendedQuestionAnswerDto.getAnswer(), "")){
+                        document.add(new Paragraph("Answer: Skipped"));
+                    } else {
+                        document.add(new Paragraph("Answer:" + extendedQuestionAnswerDto.getAnswer()));
+                    }
+
+                    if(extendedQuestionAnswerDto.getResult() == PassFailResult.PASS){
+                        chunk = new Chunk("Result: Pass");
+                        chunk.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, BaseColor.GREEN));
+                    } else {
+                        chunk = new Chunk("Result: Fail");
+                        chunk.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, BaseColor.RED));
+                    }
+                }
+            }
+        }
 
         // Byte Array Resource and HTTP Headers
         document.close();
