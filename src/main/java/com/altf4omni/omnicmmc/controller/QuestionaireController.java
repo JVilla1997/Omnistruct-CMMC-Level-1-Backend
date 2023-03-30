@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:8080"})
+@CrossOrigin(origins = {"http://34.227.103.89:8080/questions"})
 public class QuestionaireController {
     private final QuestionaireService questionaireService;
     //private final AnswerRepository answerRepository;
