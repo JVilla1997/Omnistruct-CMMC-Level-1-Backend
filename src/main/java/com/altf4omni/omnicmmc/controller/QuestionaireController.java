@@ -40,7 +40,7 @@ public class QuestionaireController {
     }
 
     /**
-     * Get the PDF
+     * Get the PDF and response
      * @return {@Link ByteArrayResource}
      */
     @PostMapping("/answer")
