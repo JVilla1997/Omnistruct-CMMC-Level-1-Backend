@@ -39,8 +39,8 @@ public class QuestionaireController {
      * @return
      */
     @PostMapping("/answer")
-    public ResponseEntity<ExtendedQuestionAnswerDto> createAnswerObject(@RequestBody AnswerRequestDto answerRequestDto) {
-        return null;
+    public ResponseEntity<String> createAnswerObject(@RequestBody AnswerRequestDto answerRequestDto) {
+        return ResponseEntity.ok("It works");
     }
 
 }
