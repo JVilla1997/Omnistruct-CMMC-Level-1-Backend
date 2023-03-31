@@ -6,10 +6,8 @@ import com.altf4omni.omnicmmc.dto.QuestionSectionDto;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
 import com.altf4omni.omnicmmc.repository.QuestionSectionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-/**
- *
- */
 @Service
 public class QuestionaireService {
     private final QuestionSectionRepository questionSectionRepository;
@@ -27,7 +25,11 @@ public class QuestionaireService {
      */
     public QuestionnaireResponse getQuestionnaire() {
         var sections = questionSectionRepository.findAll();
-        //TODO:Null check
+
+        if (CollectionUtils.isEmpty(sections)) {
+            return new QuestionnaireResponse();
+        }
+
         var sectionDtos = sections.stream()
                 .map(section -> {
                     var questionDtos = section.getQuestions().stream()
