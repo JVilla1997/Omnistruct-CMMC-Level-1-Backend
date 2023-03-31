@@ -34,21 +34,22 @@ public class AnswerService {
         Paragraph paragraph = new Paragraph(titleChunk);
         paragraph.setAlignment(Element.ALIGN_CENTER);
 
+        //Adding Omnistruct logo
         String https = "https://raw.githubusercontent.com/jvillarante/Omnistruct-CMMC-Level-1-Web/CMMC-54-Touch-up-landing-page-and-results-page/main/src/image/Omni-Logo.png";
         Image image = Image.getInstance(new URL(https));
         image.setAlignment(Element.ALIGN_CENTER);
         image.scaleAbsoluteWidth(400f);
         image.scaleAbsoluteHeight(100f);
-
         document.add(image);
 
+        //Adding title of document just after image
         document.add(paragraph);
 
         //Formatting pdf and JSON attributes added
         document.add(new Paragraph("\n"));
         for(AnswerRequest answerRequest:answerRequestDto.getSections()){
             //Section name: Formatted
-            document.add(new Paragraph("Section:" + answerRequest.getSectionName(), new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD|Font.UNDERLINE)));
+            document.add(new Paragraph("Section: " + answerRequest.getSectionName(), new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD|Font.UNDERLINE)));
 
             //For loop to go through  first main questions
             for (QuestionAnswerDto questionAnswerDto: answerRequest.getAnswerList()){
@@ -56,17 +57,17 @@ public class AnswerService {
                 if (Objects.equals(questionAnswerDto.getAnswer(), "")){
                     document.add(new Paragraph("Answer: Skipped"));
                 } else {
-                    document.add(new Paragraph("Answer:" + questionAnswerDto.getAnswer()));
+                    document.add(new Paragraph("Answer: " + questionAnswerDto.getAnswer()));
                 }
 
                 //Description: If there is a description avaible then it show the description other wise it will show the descrition for the question
                 if(questionAnswerDto.getDescription() == null){
                     document.add(new Paragraph("Description: No description avaiable "));
                 } else {
-                    document.add(new Paragraph("Description:" + questionAnswerDto.getDescription()));
+                    document.add(new Paragraph("Description: " + questionAnswerDto.getDescription()));
                 }
                 //Prompt: Question displayed to user
-                document.add(new Paragraph("Question Prompt:" + questionAnswerDto.getPrompt()));
+                document.add(new Paragraph("Question: " + questionAnswerDto.getPrompt()));
 
                 //Result: Using PassFailResult class I check the JSON file for a PASS or fail
 
@@ -83,7 +84,7 @@ public class AnswerService {
 
                 //For loop to go through all the extended questions in a specific section
                 for (ExtendedQuestionAnswerDto extendedQuestionAnswerDto: questionAnswerDto.getExtendedQuestionAnswers()){
-                    document.add(new Paragraph("Extended Question Prompt:" + extendedQuestionAnswerDto.getPrompt()));
+                    document.add(new Paragraph("Question: " + extendedQuestionAnswerDto.getPrompt()));
 
                     if(extendedQuestionAnswerDto.getDescription() == null){
                         document.add(new Paragraph("Description: No description avaiable"));

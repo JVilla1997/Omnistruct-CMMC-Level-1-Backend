@@ -21,7 +21,7 @@ import java.io.IOException;
 @RestController
 public class QuestionaireController {
     private final QuestionaireService questionaireService;
-    private AnswerService answerService;
+    private final AnswerService answerService;
     public QuestionaireController(QuestionaireService questionaireService, AnswerService answerService) {
         this.questionaireService = questionaireService;
         this.answerService = answerService;
