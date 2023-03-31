@@ -86,7 +86,7 @@ public class AnswerService {
                     document.add(new Paragraph("Extended Question Prompt:" + extendedQuestionAnswerDto.getPrompt()));
 
                     if(extendedQuestionAnswerDto.getDescription() == null){
-                        document.add(new Paragraph("Description: No description avaiable "));
+                        document.add(new Paragraph("Description: No description avaiable"));
                     } else {
                         document.add(new Paragraph("Description: " + extendedQuestionAnswerDto.getDescription()));
                     }
@@ -111,7 +111,7 @@ public class AnswerService {
             }
         }
 
-        document.add(new Paragraph("This is an assessment only please contact Omnistruct directly for further evaluation and certification.", new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD)));
+        document.add(new Paragraph("Disclaimer: This is an assessment only please contact Omnistruct directly for further evaluation and certification.", new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD)));
 
 
         // Byte Array Resource and HTTP Headers
