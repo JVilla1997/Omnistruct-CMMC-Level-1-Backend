@@ -14,11 +14,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Objects;
 
 @Service
 public class AnswerService {
-    public ResponseEntity<ByteArrayResource> answerRequestList(AnswerRequestDto answerRequestDto) throws DocumentException {
+    public ResponseEntity<ByteArrayResource> answerRequestList(AnswerRequestDto answerRequestDto) throws DocumentException, IOException {
         ByteArrayOutputStream pdfOutput = new ByteArrayOutputStream();
         Document document = new Document();
         PdfWriter.getInstance(document, pdfOutput);
@@ -26,16 +29,26 @@ public class AnswerService {
 
         //Title chunk for PDF
         Chunk chunk;
-        Chunk titleChunk = new Chunk("Policy Document", new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD));
+        Chunk extendedQuestionChunk;
+        Chunk titleChunk = new Chunk("Policy Document", new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD|Font.UNDERLINE));
         Paragraph paragraph = new Paragraph(titleChunk);
         paragraph.setAlignment(Element.ALIGN_CENTER);
+
+        String https = "https://raw.githubusercontent.com/jvillarante/Omnistruct-CMMC-Level-1-Web/CMMC-54-Touch-up-landing-page-and-results-page/main/src/image/Omni-Logo.png";
+        Image image = Image.getInstance(new URL(https));
+        image.setAlignment(Element.ALIGN_CENTER);
+        image.scaleAbsoluteWidth(400f);
+        image.scaleAbsoluteHeight(100f);
+
+        document.add(image);
+
         document.add(paragraph);
 
         //Formatting pdf and JSON attributes added
         document.add(new Paragraph("\n"));
         for(AnswerRequest answerRequest:answerRequestDto.getSections()){
             //Section name: Formatted
-            document.add(new Paragraph("Section:" + answerRequest.getSectionName(), new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD)));
+            document.add(new Paragraph("Section:" + answerRequest.getSectionName(), new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD|Font.UNDERLINE)));
 
             //For loop to go through  first main questions
             for (QuestionAnswerDto questionAnswerDto: answerRequest.getAnswerList()){
@@ -53,7 +66,7 @@ public class AnswerService {
                     document.add(new Paragraph("Description:" + questionAnswerDto.getDescription()));
                 }
                 //Prompt: Question displayed to user
-                document.add(new Paragraph("Question Prompt" + questionAnswerDto.getDescription()));
+                document.add(new Paragraph("Question Prompt:" + questionAnswerDto.getPrompt()));
 
                 //Result: Using PassFailResult class I check the JSON file for a PASS or fail
 
@@ -85,15 +98,21 @@ public class AnswerService {
                     }
 
                     if(extendedQuestionAnswerDto.getResult() == PassFailResult.PASS){
-                        chunk = new Chunk("Result: Pass");
-                        chunk.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, BaseColor.GREEN));
+                        extendedQuestionChunk = new Chunk("Result: Pass");
+                        extendedQuestionChunk.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, BaseColor.GREEN));
                     } else {
-                        chunk = new Chunk("Result: Fail");
-                        chunk.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, BaseColor.RED));
+                        extendedQuestionChunk = new Chunk("Result: Fail");
+                        extendedQuestionChunk.setFont(FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL, BaseColor.RED));
                     }
+
+                    document.add(new Paragraph(extendedQuestionChunk));
+
                 }
             }
         }
+
+        document.add(new Paragraph("This is an assessment only please contact Omnistruct directly for further evaluation and certification.", new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD)));
+
 
         // Byte Array Resource and HTTP Headers
         document.close();

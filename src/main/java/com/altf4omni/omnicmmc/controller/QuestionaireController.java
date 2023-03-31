@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @Slf4j
 @RestController
 public class QuestionaireController {
@@ -42,9 +44,11 @@ public class QuestionaireController {
      * @return {@Link ByteArrayResource}
      */
     @PostMapping("/answer")
-    public ResponseEntity<ByteArrayResource> createAnswerObject(@RequestBody AnswerRequestDto answerRequestDto) throws DocumentException {
+    public ResponseEntity<ByteArrayResource> createAnswerObject(@RequestBody AnswerRequestDto answerRequestDto) throws DocumentException, IOException {
         // Call the answerService to process the PDF
        var pdf = answerService.answerRequestList(answerRequestDto);
+
+       //HTTP Header for pdf generator
         HttpHeaders pdfHeader = new HttpHeaders();
         pdfHeader.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=policy.pdf");
 
