@@ -6,7 +6,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
   mail:
     host: smtp.gmail.com
     port: 587
