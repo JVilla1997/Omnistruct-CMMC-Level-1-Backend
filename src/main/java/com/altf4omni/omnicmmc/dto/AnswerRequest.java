@@ -9,4 +9,5 @@ public class AnswerRequest {
     private List<QuestionAnswerDto> answerList;
     private String sectionName;
     private String sectionResult;
+    private String companyName;
 }
