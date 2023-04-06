@@ -7,4 +7,5 @@ import java.util.List;
 @Data
 public class AnswerRequestDto {
     private List<AnswerRequest> sections;
+    private String companyName;
 }
