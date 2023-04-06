@@ -9,9 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuestionSectionDto {
+public class SectionPostResponse {
+    private boolean success;
     private Integer sectionID;
-    private List<QuestionDto> questions;
-    private String sectionName;
-    private Integer sequenceNumber;
 }

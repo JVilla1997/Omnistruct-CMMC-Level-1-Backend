@@ -2,7 +2,10 @@ package com.altf4omni.omnicmmc.controller;
 
 
 import com.altf4omni.omnicmmc.dto.AnswerRequestDto;
+import com.altf4omni.omnicmmc.dto.QuestionSectionDto;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
+import com.altf4omni.omnicmmc.dto.SectionPostResponse;
+import com.altf4omni.omnicmmc.entity.QuestionSection;
 import com.altf4omni.omnicmmc.service.AnswerService;
 import com.altf4omni.omnicmmc.service.QuestionaireService;
 import com.itextpdf.text.DocumentException;
@@ -36,6 +39,14 @@ public class QuestionaireController {
     @GetMapping("/questions")
     public ResponseEntity<QuestionnaireResponse> getQuestionnaire() {
         var response = questionaireService.getQuestionnaire();
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/section")
+    public ResponseEntity<SectionPostResponse> createSection(@RequestBody QuestionSectionDto sectionToCreate) {
+        var section = new QuestionSection(null, sectionToCreate.getSectionName(), sectionToCreate.getSequenceNumber(), null);
+        var createdSectionID = questionaireService.createSection(section);
+        var response = new SectionPostResponse(true, createdSectionID);
         return ResponseEntity.ok(response);
     }
     /**

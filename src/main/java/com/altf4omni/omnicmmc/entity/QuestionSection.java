@@ -20,6 +20,7 @@ public class QuestionSection {
      */
     @Id
     @Column(name = "SECTION_ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer sectionID;
     /**
      * Attribute to identify each question section's name

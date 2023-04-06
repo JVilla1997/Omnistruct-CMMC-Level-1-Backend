@@ -4,6 +4,7 @@ import com.altf4omni.omnicmmc.dto.ExtendedQuestionDto;
 import com.altf4omni.omnicmmc.dto.QuestionDto;
 import com.altf4omni.omnicmmc.dto.QuestionSectionDto;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
+import com.altf4omni.omnicmmc.entity.QuestionSection;
 import com.altf4omni.omnicmmc.repository.QuestionSectionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -42,10 +43,14 @@ public class QuestionaireService {
                                         question.getQFlag(), question.getQuestionSequence());
                             })
                             .toList();
-                    return new QuestionSectionDto(questionDtos, section.getSectionName(), section.getSectionSequence());
+                    return new QuestionSectionDto(section.getSectionID(), questionDtos, section.getSectionName(), section.getSectionSequence());
                 })
                 .toList();
         return new QuestionnaireResponse(sectionDtos);
     }
 
+    public Integer createSection(QuestionSection section) {
+        var createdSection = questionSectionRepository.save(section);
+        return createdSection.getSectionID();
+    }
 }
