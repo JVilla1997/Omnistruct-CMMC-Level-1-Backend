@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExtendedQuestionDto {
+    private Integer extendedQuestionID;
     private String prompt;
     private String description;
     private Integer sequenceNumber;
+    private Integer questionID;
 
 }
