@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-
 @Entity
 @Table(name = "QUESTION")
 @Data
@@ -22,6 +21,7 @@ public class Question {
      */
     @Id
     @Column(name = "QUESTION_ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer questionID;
 
     /**

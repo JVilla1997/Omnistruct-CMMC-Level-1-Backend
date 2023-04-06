@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SectionPostResponse {
+public class QuestionUpdateResponse {
     private boolean success;
-    private Integer sectionID;
 }

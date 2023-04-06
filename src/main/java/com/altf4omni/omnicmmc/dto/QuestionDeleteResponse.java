@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SectionPostResponse {
+public class QuestionDeleteResponse {
     private boolean success;
-    private Integer sectionID;
 }

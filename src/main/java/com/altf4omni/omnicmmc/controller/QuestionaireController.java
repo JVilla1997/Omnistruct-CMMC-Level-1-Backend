@@ -3,11 +3,17 @@ package com.altf4omni.omnicmmc.controller;
 
 import com.altf4omni.omnicmmc.dto.AnswerRequestDto;
 import com.altf4omni.omnicmmc.dto.QuestionSectionDto;
+import com.altf4omni.omnicmmc.dto.QuestionDto;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
+import com.altf4omni.omnicmmc.dto.QuestionDeleteResponse;
+import com.altf4omni.omnicmmc.dto.QuestionPostResponse;
+import com.altf4omni.omnicmmc.dto.QuestionUpdateResponse;
 import com.altf4omni.omnicmmc.dto.SectionDeleteResponse;
 import com.altf4omni.omnicmmc.dto.SectionPostResponse;
 import com.altf4omni.omnicmmc.dto.SectionUpdateResponse;
 import com.altf4omni.omnicmmc.entity.QuestionSection;
+import com.altf4omni.omnicmmc.entity.Question;
+import com.altf4omni.omnicmmc.entity.ExtendedQuestion;
 import com.altf4omni.omnicmmc.service.AnswerService;
 import com.altf4omni.omnicmmc.service.QuestionaireService;
 import com.itextpdf.text.DocumentException;
@@ -86,5 +92,33 @@ public class QuestionaireController {
 
         // Return the response
         return ResponseEntity.ok().headers(pdfHeader).contentType(MediaType.APPLICATION_PDF).body(pdf.getBody());
+    }
+
+    @PostMapping("/question")
+    public ResponseEntity<QuestionPostResponse> createQuestion(@RequestBody QuestionDto questionToCreate) {
+        var question = new Question(null, questionToCreate.getPrompt(), questionToCreate.getDescription(), questionToCreate.getSequenceNumber(), questionToCreate.getFlag(), null);
+        var createdQuestionID = questionaireService.createQuestion(question);
+        var response = new QuestionPostResponse(true, createdQuestionID);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/question")
+    public ResponseEntity<QuestionDeleteResponse> deleteQuestion(@RequestBody QuestionDto questionToDelete) {
+        questionaireService.deleteQuestion(questionToDelete.getQuestionID());
+        var response = new QuestionDeleteResponse(true);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/question")
+    public ResponseEntity<QuestionUpdateResponse> updateQuestion(@RequestBody QuestionDto questionToUpdate) {
+        if (questionToUpdate.getQuestionID() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        var updatedQuestion = questionaireService.updateQuestion(questionToUpdate);
+        if (updatedQuestion == null) {
+            return ResponseEntity.notFound().build();
+        }
+        var response = new QuestionUpdateResponse(true);
+        return ResponseEntity.ok(response);
     }
 }
