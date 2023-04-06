@@ -6,6 +6,7 @@ import com.altf4omni.omnicmmc.dto.QuestionSectionDto;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
 import com.altf4omni.omnicmmc.dto.SectionDeleteResponse;
 import com.altf4omni.omnicmmc.dto.SectionPostResponse;
+import com.altf4omni.omnicmmc.dto.SectionUpdateResponse;
 import com.altf4omni.omnicmmc.entity.QuestionSection;
 import com.altf4omni.omnicmmc.service.AnswerService;
 import com.altf4omni.omnicmmc.service.QuestionaireService;
@@ -55,6 +56,19 @@ public class QuestionaireController {
     public ResponseEntity<SectionDeleteResponse> deleteSection(@RequestBody QuestionSectionDto sectionToDelete) {
         questionaireService.deleteSection(sectionToDelete.getSectionID());
         var response = new SectionDeleteResponse(true);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/section")
+    public ResponseEntity<SectionUpdateResponse> updateSection(@RequestBody QuestionSectionDto sectionToUpdate) {
+        if (sectionToUpdate.getSectionID() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        var updatedSection = questionaireService.updateSection(sectionToUpdate);
+        if (updatedSection == null) {
+            return ResponseEntity.notFound().build();
+        }
+        var response = new SectionUpdateResponse(true);
         return ResponseEntity.ok(response);
     }
     /**

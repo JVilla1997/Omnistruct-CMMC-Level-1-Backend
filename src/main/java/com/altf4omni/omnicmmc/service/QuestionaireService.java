@@ -59,4 +59,16 @@ public class QuestionaireService {
         sectionToDelete.setSectionID(sectionID);
         questionSectionRepository.delete(sectionToDelete);
     }
+
+    public QuestionSection updateSection(QuestionSectionDto section) {
+        var storedSection = questionSectionRepository.findById(section.getSectionID());
+        if(!storedSection.isPresent()) {
+            return null;
+        }
+        var updatingSection = storedSection.get();
+        updatingSection.setSectionName(section.getSectionName());
+        updatingSection.setSectionSequence(section.getSequenceNumber());
+        questionSectionRepository.save(updatingSection);
+        return updatingSection;
+    }
 }
