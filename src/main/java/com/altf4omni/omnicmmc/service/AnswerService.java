@@ -120,7 +120,7 @@ public class AnswerService {
         ByteArrayResource byteResource= new ByteArrayResource(pdfData);
 
         HttpHeaders pdfHeader = new HttpHeaders();
-        pdfHeader.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=policy.pdf");
+        pdfHeader.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=assessment.pdf");
 
         return ResponseEntity.ok().headers(pdfHeader).contentType(MediaType.APPLICATION_PDF).body(byteResource);
 

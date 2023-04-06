@@ -59,8 +59,11 @@ public class QuestionaireController {
         return ResponseEntity.ok().headers(pdfHeader).contentType(MediaType.APPLICATION_PDF).body(pdf.getBody());
     }
     /**
-     * Get the Policy PDF and response
-     * @return {@Link ByteArrayResource}
+     * Get the Policy PDF and response.
+     * This PDF is slightly different from the other one
+     * as this one tells the user what their policies should
+     * look like.
+     * @return {ByteArrayResource}
      */
     @PostMapping("/policy")
     public ResponseEntity<ByteArrayResource> createPolicyObject(@RequestBody AnswerRequestDto answerRequestDto) throws DocumentException, IOException {
