@@ -53,4 +53,10 @@ public class QuestionaireService {
         var createdSection = questionSectionRepository.save(section);
         return createdSection.getSectionID();
     }
+
+    public void deleteSection(Integer sectionID) {
+        var sectionToDelete = new QuestionSection();
+        sectionToDelete.setSectionID(sectionID);
+        questionSectionRepository.delete(sectionToDelete);
+    }
 }

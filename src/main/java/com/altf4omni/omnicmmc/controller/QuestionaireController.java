@@ -4,6 +4,7 @@ package com.altf4omni.omnicmmc.controller;
 import com.altf4omni.omnicmmc.dto.AnswerRequestDto;
 import com.altf4omni.omnicmmc.dto.QuestionSectionDto;
 import com.altf4omni.omnicmmc.dto.QuestionnaireResponse;
+import com.altf4omni.omnicmmc.dto.SectionDeleteResponse;
 import com.altf4omni.omnicmmc.dto.SectionPostResponse;
 import com.altf4omni.omnicmmc.entity.QuestionSection;
 import com.altf4omni.omnicmmc.service.AnswerService;
@@ -47,6 +48,13 @@ public class QuestionaireController {
         var section = new QuestionSection(null, sectionToCreate.getSectionName(), sectionToCreate.getSequenceNumber(), null);
         var createdSectionID = questionaireService.createSection(section);
         var response = new SectionPostResponse(true, createdSectionID);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/section")
+    public ResponseEntity<SectionDeleteResponse> deleteSection(@RequestBody QuestionSectionDto sectionToDelete) {
+        questionaireService.deleteSection(sectionToDelete.getSectionID());
+        var response = new SectionDeleteResponse(true);
         return ResponseEntity.ok(response);
     }
     /**
