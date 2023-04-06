@@ -44,11 +44,11 @@ public class QuestionaireService {
                     var questionDtos = section.getQuestions().stream()
                             .map(question -> {
                                 var extendedQuestionDtos = question.getExtndQuestion().stream()
-                                        .map(extendedQuestion -> new ExtendedQuestionDto(extendedQuestion.getExtndPrompt(), extendedQuestion.getExtndDescription(),
-                                                extendedQuestion.getExtndSequence()))
+                                        .map(extendedQuestion -> new ExtendedQuestionDto(extendedQuestion.getExtndQuestionID(), extendedQuestion.getExtndPrompt(), extendedQuestion.getExtndDescription(),
+                                                extendedQuestion.getExtndSequence(), extendedQuestion.getQuestionID()))
                                         .toList();
                                 return new QuestionDto(question.getQuestionID(), extendedQuestionDtos, question.getQuestionPrompt(), question.getQuestionDescription(),
-                                        question.getQFlag(), question.getQuestionSequence());
+                                        question.getQFlag(), question.getQuestionSequence(), question.getSectionID());
                             })
                             .toList();
                     return new QuestionSectionDto(section.getSectionID(), questionDtos, section.getSectionName(), section.getSectionSequence());
@@ -57,17 +57,31 @@ public class QuestionaireService {
         return new QuestionnaireResponse(sectionDtos);
     }
 
+    /**
+     * Create service for a new Section
+     */
     public Integer createSection(QuestionSection section) {
         var createdSection = questionSectionRepository.save(section);
         return createdSection.getSectionID();
     }
 
-    public void deleteSection(Integer sectionID) {
+    /**
+     * Delete service for an existing Section
+     */
+    public boolean deleteSection(Integer sectionID) {
+        var storedSection = questionSectionRepository.findById(sectionID);
+        if(!storedSection.isPresent()) {
+            return false;
+        }
         var sectionToDelete = new QuestionSection();
         sectionToDelete.setSectionID(sectionID);
         questionSectionRepository.delete(sectionToDelete);
+        return true;
     }
 
+    /**
+     * Update service for an existing Section
+     */
     public QuestionSection updateSection(QuestionSectionDto section) {
         var storedSection = questionSectionRepository.findById(section.getSectionID());
         if(!storedSection.isPresent()) {
@@ -80,17 +94,31 @@ public class QuestionaireService {
         return updatingSection;
     }
 
+    /**
+     * Create service for a new question
+     */
     public Integer createQuestion(Question question) {
         var createdQuestion = questionRepository.save(question);
         return createdQuestion.getQuestionID();
     }
 
-    public void deleteQuestion(Integer questionID) {
+    /**
+     * Delete service for an existing question
+     */
+    public boolean deleteQuestion(Integer questionID) {
+        var storedQuestion = questionRepository.findById(questionID);
+        if(!storedQuestion.isPresent()) {
+            return false;
+        }
         var questionToDelete = new Question();
         questionToDelete.setQuestionID(questionID);
         questionRepository.delete(questionToDelete);
+        return true;
     }
 
+    /**
+     * Update service for an existing question
+     */
     public Question updateQuestion(QuestionDto question) {
         var storedQuestion = questionRepository.findById(question.getQuestionID());
         if(!storedQuestion.isPresent()) {
@@ -101,5 +129,42 @@ public class QuestionaireService {
         updatingQuestion.setQuestionSequence(question.getSequenceNumber());
         questionRepository.save(updatingQuestion);
         return updatingQuestion;
+    }
+
+    /**
+     * Create service for a new extended question
+     */
+    public Integer createExtendedQuestion(ExtendedQuestion extendedQuestion) {
+        var createdExtendedQuestion = extendedQuestionRepository.save(extendedQuestion);
+        return createdExtendedQuestion.getExtndQuestionID();
+    }
+
+    /**
+     * Delete service for an existing extended question
+     */
+    public boolean deleteExtendedQuestion(Integer extendedQuestionID) {
+        var storedExtendedQuestion = extendedQuestionRepository.findById(extendedQuestionID);
+        if(!storedExtendedQuestion.isPresent()) {
+            return false;
+        }
+        var extendedQuestionToDelete = new ExtendedQuestion();
+        extendedQuestionToDelete.setExtndQuestionID(extendedQuestionID);
+        extendedQuestionRepository.delete(extendedQuestionToDelete);
+        return true;
+    }
+
+    /**
+     * Update service for an existing extended question
+     */
+    public ExtendedQuestion updateExtendedQuestion(ExtendedQuestionDto extendedQuestion) {
+        var storedExtendedQuestion = extendedQuestionRepository.findById(extendedQuestion.getExtendedQuestionID());
+        if(!storedExtendedQuestion.isPresent()) {
+            return null;
+        }
+        var updatingExtendedQuestion = storedExtendedQuestion.get();
+        updatingExtendedQuestion.setExtndPrompt(extendedQuestion.getPrompt());
+        updatingExtendedQuestion.setExtndSequence(extendedQuestion.getSequenceNumber());
+        extendedQuestionRepository.save(updatingExtendedQuestion);
+        return updatingExtendedQuestion;
     }
 }

@@ -17,6 +17,7 @@ public class ExtendedQuestion {
 
     @Id
     @Column(name = "EXTND_QUESTION_ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer extndQuestionID;
 
     @Column(name = "EXTND_PROMPT")
@@ -27,4 +28,7 @@ public class ExtendedQuestion {
 
     @Column(name = "EXTND_SEQUENCE")
     private Integer extndSequence;
+
+    @Column(name = "QUESTION_ID")
+    private Integer questionID;
 }

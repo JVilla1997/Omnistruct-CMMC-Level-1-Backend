@@ -16,4 +16,6 @@ public class QuestionDto {
     private String description;
     private Boolean flag;
     private Integer sequenceNumber;
+
+    private Integer sectionID;
 }

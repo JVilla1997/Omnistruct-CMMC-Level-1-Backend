@@ -51,4 +51,7 @@ public class Question {
     @OneToMany
     @JoinColumn(name = "QUESTION_ID")
     private List<ExtendedQuestion> extndQuestion;
+
+    @Column(name = "SECTION_ID")
+    private Integer sectionID;
 }
