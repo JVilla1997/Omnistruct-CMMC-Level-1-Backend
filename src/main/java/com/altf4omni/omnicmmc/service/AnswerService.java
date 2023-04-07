@@ -21,6 +21,8 @@ import java.util.Objects;
 @Service
 public class AnswerService {
     public ResponseEntity<ByteArrayResource> answerRequestList(AnswerRequestDto answerRequestDto) throws DocumentException, IOException {
+        String SectionResult = null;
+
         ByteArrayOutputStream pdfOutput = new ByteArrayOutputStream();
         Document document = new Document();
         PdfWriter.getInstance(document, pdfOutput);
@@ -29,7 +31,7 @@ public class AnswerService {
         //Title chunk for PDF
         Chunk chunk;
         Chunk extendedQuestionChunk;
-        Chunk titleChunk = new Chunk("Policy Document", new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD|Font.UNDERLINE));
+        Chunk titleChunk = new Chunk("Assessment Document", new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD|Font.UNDERLINE));
         Paragraph paragraph = new Paragraph(titleChunk);
         paragraph.setAlignment(Element.ALIGN_CENTER);
 
@@ -37,7 +39,7 @@ public class AnswerService {
         String https = "https://raw.githubusercontent.com/jvillarante/Omnistruct-CMMC-Level-1-Web/CMMC-54-Touch-up-landing-page-and-results-page/main/src/image/Omni-Logo.png";
         Image image = Image.getInstance(new URL(https));
         image.setAlignment(Element.ALIGN_CENTER);
-        image.scaleAbsoluteWidth(400f);
+        image.scaleAbsoluteWidth(500f);
         image.scaleAbsoluteHeight(100f);
         document.add(image);
 
@@ -47,8 +49,14 @@ public class AnswerService {
         //Formatting pdf and JSON attributes added
         document.add(new Paragraph("\n"));
         for(AnswerRequest answerRequest:answerRequestDto.getSections()){
+            //Section Result
+            if(Objects.equals(answerRequest.getSectionResult(), "PASS")){
+                SectionResult = "PASS";
+            } else {
+                SectionResult = "Fail";
+            }
             //Section name: Formatted
-            document.add(new Paragraph("Section: " + answerRequest.getSectionName(), new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD|Font.UNDERLINE)));
+            document.add(new Paragraph("Section: " + answerRequest.getSectionName() + " - " + SectionResult, new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD|Font.UNDERLINE)));
 
             //For loop to go through  first main questions
             for (QuestionAnswerDto questionAnswerDto: answerRequest.getAnswerList()){
@@ -120,7 +128,7 @@ public class AnswerService {
         ByteArrayResource byteResource= new ByteArrayResource(pdfData);
 
         HttpHeaders pdfHeader = new HttpHeaders();
-        pdfHeader.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=policy.pdf");
+        pdfHeader.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=assessment.pdf");
 
         return ResponseEntity.ok().headers(pdfHeader).contentType(MediaType.APPLICATION_PDF).body(byteResource);
 
