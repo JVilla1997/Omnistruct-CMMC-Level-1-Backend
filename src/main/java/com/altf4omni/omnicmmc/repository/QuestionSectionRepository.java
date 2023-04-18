@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface QuestionSectionRepository extends JpaRepository<QuestionSection, Integer> {
-
+                    
 }
