@@ -12,4 +12,5 @@ public interface UserRepository extends CrudRepository<com.altf4omni.omnicmmc.en
     @Query("SELECT u FROM User u WHERE u.username = :username")
     //TODO: Fix the return type of this method. This is part of Spring security, not our user entity
     public User getUserByUsername(@Param("username") String username);
+
 }
