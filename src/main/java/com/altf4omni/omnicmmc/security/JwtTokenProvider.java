@@ -20,11 +20,9 @@ public class JwtTokenProvider {
 
     private AuthenticationManager authenticationManager = null;
 
-    private JwtTokenProvider jwtTokenProvider;
     @Autowired
-    public JwtTokenProvider(AuthenticationManager authenticationManagerBean, JwtTokenProvider jwtTokenProvider) {
+    public JwtTokenProvider(AuthenticationManager authenticationManagerBean) {
         this.authenticationManager = authenticationManager;
-        //this.jwtTokenProvider = jwtTokenProvider;
     }
 
     public String generateToken(Authentication authentication){

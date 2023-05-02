@@ -1,2 +1,17 @@
-package com.altf4omni.omnicmmc.security;public class JwtResponse {
+package com.altf4omni.omnicmmc.security;
+
+public class JwtResponse {
+    private String token;
+
+    public JwtResponse(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

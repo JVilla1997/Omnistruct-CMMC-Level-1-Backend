@@ -10,13 +10,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/auth")
 //@RestController
 //@CrossOrigin//(origins = {"http://34.227.103.89:8080/AdminPage"})
 public class CredentialsController {//extends UsernamePasswordAuthenticationFilter {
@@ -47,12 +49,12 @@ public class CredentialsController {//extends UsernamePasswordAuthenticationFilt
 
     @PostMapping("/login")
     public ResponseEntity<String> authenticateUser(@RequestBody MyUserDetails loginRequest) throws Exception {
-        //authenticate the user
+        // authenticate the user
         Authentication authentication = authenticationManager.build().authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
         );
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        //generate the JWT
+        // generate the JWT
         String token = tokenService.generateToken(userDetails);
         return ResponseEntity.ok(token);
     }

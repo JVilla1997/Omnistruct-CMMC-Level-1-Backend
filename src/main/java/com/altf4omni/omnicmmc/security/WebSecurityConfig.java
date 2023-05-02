@@ -1,7 +1,6 @@
-package com.altf4omni.omnicmmc.service;
+package com.altf4omni.omnicmmc.security;
 
-import com.altf4omni.omnicmmc.security.JwtAuthenticationFilter;
-import com.altf4omni.omnicmmc.security.JwtTokenProvider;
+import com.altf4omni.omnicmmc.service.JwtConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
@@ -64,21 +64,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests().antMatchers("/**").permitAll()
-//                .antMatchers("/").hasAnyAuthority("ADMIN", "CREATOR")
-//                .antMatchers("/new").hasAnyAuthority("ADMIN", "CREATOR")
-//                .antMatchers("/edit/**").hasAnyAuthority("ADMIN")
-//                .antMatchers("/delete/**").hasAuthority("ADMIN")
-//                .antMatchers("/login").hasAnyAuthority("ADMIN")
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin().permitAll()
-//                .and()
-//                .logout().permitAll()
-//                .and()
-//               // .csrf().disable() //we need to remove this for security purposes
-//                .exceptionHandling().accessDeniedPage("/403");
-//        http.apply(new JwtConfigurer(new JwtTokenProvider())); //add the Jwt token provider
         http
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -89,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/new").hasAnyAuthority("ADMIN", "CREATOR")
                 .antMatchers("/edit/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/delete/**").hasAuthority("ADMIN")
-                .antMatchers("/login").hasAnyAuthority("ADMIN")
+                .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()
@@ -107,10 +92,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**");
     }
 
-    @Bean(name = "myJwtAuthenticationFilter")
-    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(authenticationManager());
-        jwtAuthenticationFilter().setAuthenticationManager(authenticationManagerBean());
-        return filter;
-    }
 }

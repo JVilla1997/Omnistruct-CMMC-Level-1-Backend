@@ -26,10 +26,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider){
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager){
         super.setAuthenticationManager(authenticationManager);
         this.authenticationManager = getAuthenticationManager();
-        this.jwtTokenProvider = jwtTokenProvider;
+        this.jwtTokenProvider = new JwtTokenProvider(authenticationManager);
         setFilterProcessesUrl("/login");
     }
 
