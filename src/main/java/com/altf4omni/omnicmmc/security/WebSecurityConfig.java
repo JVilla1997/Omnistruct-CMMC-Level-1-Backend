@@ -23,12 +23,14 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    private UserDetailsService userDetailsService;
+
     @Autowired
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsImplService();
+    public WebSecurityConfig() {
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.userDetailsService = userDetailsService;
     }
 
     @Bean
@@ -45,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
@@ -96,13 +98,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedHandler(new AccessDeniedHandlerImpl())
                 .and()
-                .apply(new JwtConfigurer(new JwtTokenProvider(authenticationManagerBean(),jwtTokenProvider))); //add the Jwt token provider
+                .apply(new JwtConfigurer(new JwtTokenProvider(authenticationManagerBean()))); //add the Jwt token provider
     }
-
-//    @Bean
-//    public JwtTokenProvider jwtTokenProvider(){
-//        return new JwtTokenProvider();
-//    }
 
     @Override
     public void configure(WebSecurity web) {
@@ -112,7 +109,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean(name = "myJwtAuthenticationFilter")
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(authenticationManager(), jwtTokenProvider);
+        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(authenticationManager());
         jwtAuthenticationFilter().setAuthenticationManager(authenticationManagerBean());
         return filter;
     }
