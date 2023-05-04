@@ -15,20 +15,20 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-
+import org.springframework.context.annotation.Lazy;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Lazy
     private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
-    public WebSecurityConfig() {
+    public WebSecurityConfig(JwtTokenProvider jwtTokenProvider, UserDetailsService userDetailsService) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userDetailsService = userDetailsService;
     }
@@ -52,29 +52,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
-    /**
-     * this configures authentication manager
-     * @param auth
-     * @throws Exception
-     */
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider())
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .and()
+                .disable()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
                 .antMatchers("/").hasAnyAuthority("ADMIN", "CREATOR")
                 .antMatchers("/new").hasAnyAuthority("ADMIN", "CREATOR")
                 .antMatchers("/edit/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/delete/**").hasAuthority("ADMIN")
-                .antMatchers("/login").permitAll()
+                .antMatchers("/admin/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()

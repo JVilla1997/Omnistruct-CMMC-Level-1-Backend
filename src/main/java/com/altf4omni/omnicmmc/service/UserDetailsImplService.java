@@ -4,6 +4,7 @@ import com.altf4omni.omnicmmc.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.userdetails.User;
 
 @Service
 public class UserDetailsImplService implements UserDetailsService {
@@ -14,11 +15,12 @@ public class UserDetailsImplService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException
             {
+                //User user = userRepository.getUserByUsername(username);
                 User user = userRepository.getUserByUsername(username);
                 if(user == null)
                 {
                     throw new UsernameNotFoundException("Could not find user");
                 }
-                return new MyUserDetails(userRepository);
+                return new MyUserDetails(user);
             }
 }

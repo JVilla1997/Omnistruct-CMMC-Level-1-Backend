@@ -6,6 +6,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -18,8 +20,11 @@ public class JwtTokenProvider {
     public static final long EXPIRATION_TIME = 86400000; // 1 day
     public static final String TOKEN_PREFIX = "Bearer";
 
-    private AuthenticationManager authenticationManager = null;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
     @Autowired
     public JwtTokenProvider(AuthenticationManager authenticationManagerBean) {
         this.authenticationManager = authenticationManager;
@@ -61,5 +66,10 @@ public class JwtTokenProvider {
             System.out.println("Invalid JWT token.");
         }
         return false;
+    }
+
+    public UserDetails getUserDetailsFromToken(String token) {
+        String username = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
+        return userDetailsService.loadUserByUsername(username);
     }
 }

@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "ROLES")
@@ -28,4 +30,7 @@ public class Role {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> userSet;
 }
