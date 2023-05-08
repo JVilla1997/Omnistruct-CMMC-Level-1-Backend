@@ -27,4 +27,15 @@ public class User {
 
     @Column(name= "ENABLED")
     private boolean enabled;
+
+    @Column(name="PASSWORD_UPDATED")
+    private boolean passwordUpdated;
+
+    public boolean isPasswordUpdated() {
+        return passwordUpdated;
+    }
+
+    public void setPasswordUpdated(boolean updated) {
+        this.passwordUpdated = updated;
+    }
 }
